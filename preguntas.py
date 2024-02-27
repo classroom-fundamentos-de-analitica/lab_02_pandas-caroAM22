@@ -50,8 +50,9 @@ def pregunta_03():
     E    14
     Name: _c1, dtype: int64
 
+
     """
-    return tbl0["_c1"].value_counts()
+    return tbl0["_c1"].value_counts().sort_index()
 
 
 def pregunta_04():
@@ -164,12 +165,32 @@ def pregunta_10():
     3   D                  1:2:3:5:5:7
     4   E  1:1:2:3:3:4:5:5:5:6:7:8:8:9
     """
-    tbl0_sorted = tbl0.sort_values(by="_c2")
+
+
+def pregunta_10():
+    """
+    Construya una tabla que contenga _c1 y una lista separada por ':' de los valores de
+    la columna _c2 ordenados para el archivo `tbl0.tsv`.
+
+    Rta/
+                                                                 _c1
+        _c0
+    0   A              1:1:2:3:6:7:8:9
+    1   B                1:3:4:5:6:8:9
+    2   C                    0:5:6:7:9
+    3   D                  1:2:3:5:5:7
+    4   E  1:1:2:3:3:4:5:5:5:6:7:8:8:9
+    """
+
     return (
-        tbl0_sorted.groupby("_c1")["_c2"]
-        .apply(lambda x: ":".join(x.astype(str)))
+        tbl0.sort_values(by="_c2")
+        .groupby("_c1")["_c2"]
+        .apply(lambda x: ":".join(sorted(x.astype(str))))
         .reset_index()
     )
+
+
+print(pregunta_10())
 
 
 def pregunta_11():
